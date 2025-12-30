@@ -28,6 +28,6 @@ Optional:
 
 ## Installation
 ```bash
-git clone <your repo url>
+git clone https://github.com/Anwar-Projects/proxmox-autoshutdown/tree/Projects
 cd proxmox-maintenance-report
 chmod +x proxmox-maintenance.sh
