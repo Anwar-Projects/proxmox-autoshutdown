@@ -1,0 +1,68 @@
+Configuration (Environment Variables)
+
+All settings support ENV overrides.
+
+Paths
+
+LOG_FILE (default /var/log/proxmox_maintenance.log)
+
+STATE_DIR (default /var/lib/proxmox_maintenance)
+
+HTML_REPORT (default /tmp/proxmox_dashboard_report.html)
+
+Email
+
+MAIL_TO (required for your environment)
+
+MAIL_FROM (default proxmox@<fqdn>)
+
+MAIL_SUBJECT_PREFIX (default Proxmox Health + Shutdown Report)
+
+Behavior
+
+POWER_OFF_NODE (default 1)
+Set 0 to avoid powering off the host.
+
+VM_SHUTDOWN_TIMEOUT (default 60)
+
+VM_GLOBAL_WAIT (default 600)
+
+PBS Wait
+
+PBS_SAFETY_WAIT (default 900)
+
+PBS_STABLE_CHECKS (default 10)
+
+PBS_INTERVAL (default 5)
+
+Dry Run
+
+DRY_RUN=1 or run with --dry-run
+
+Usage
+Dry run (recommended first)
+./proxmox-maintenance.sh --dry-run
+
+Run without powering off the node
+MAIL_TO="you@example.com" POWER_OFF_NODE=0 ./proxmox-maintenance.sh
+
+Typical unattended run (powers off by default)
+MAIL_TO="you@example.com" ./proxmox-maintenance.sh
+
+Mail Transport
+
+The script requires a working sendmail interface.
+
+Option 1: msmtp-mta (lightweight SMTP relay)
+
+Option 2: postfix (local MTA)
+
+See examples/msmtprc.example.
+
+Safety Notes
+
+Default behavior may power off the node. Set POWER_OFF_NODE=0 if you do not want shutdown.
+
+apt dist-upgrade can change kernels and require reboot; plan maintenance windows accordingly.
+
+The emailed report includes the last 200 lines of the maintenance log; treat it as potentially sensitive.
