@@ -1,0 +1,109 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": "proxmox-autoshutdown-advanced",
+    "title": "Proxmox Autoshutdown - Advanced",
+    "description": "Monitoring dashboard for Proxmox Autoshutdown with async/concurrent operations",
+    "tags": ["proxmox", "automation", "maintenance", "grafana"],
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "refresh": "30s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Health Status",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "proxmox_autoshutdown_health_status",
+            "legendFormat": "Health"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "steps": [
+                {"value": 0, "color": "red"},
+                {"value": 1, "color": "green"}
+              ]
+            }
+          }
+        },
+        "gridPos": {"h": 4, "w": 6, "x": 0, "y": 0}
+      },
+      {
+        "id": 2,
+        "title": "VMs Shutdown (Total)",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "proxmox_autoshutdown_vms_shutdown_total",
+            "legendFormat": "VMs"
+          }
+        ],
+        "gridPos": {"h": 4, "w": 6, "x": 6, "y": 0}
+      },
+      {
+        "id": 3,
+        "title": "Current Phase",
+        "type": "table",
+        "targets": [
+          {
+            "expr": "proxmox_autoshutdown_current_phase",
+            "format": "table",
+            "instant": true
+          }
+        ],
+        "gridPos": {"h": 4, "w": 12, "x": 12, "y": 0}
+      },
+      {
+        "id": 4,
+        "title": "Operation Duration",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "proxmox_autoshutdown_operation_duration_seconds",
+            "legendFormat": "{{operation}}"
+          }
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          }
+        },
+        "gridPos": {"h": 8, "w": 12, "x": 0, "y": 4}
+      },
+      {
+        "id": 5,
+        "title": "Active Shutdowns",
+        "type": "timeseries",
+        "targets": [
+          {
+            "expr": "proxmox_autoshutdown_active_shutdowns",
+            "legendFormat": "Active"
+          }
+        ],
+        "gridPos": {"h": 8, "w": 12, "x": 12, "y": 4}
+      },
+      {
+        "id": 6,
+        "title": "System Resources",
+        "type": "timeseries",
+        "targets": [
+          {"expr": "proxmox_autoshutdown_memory_usage_percent", "legendFormat": "Memory %"},
+          {"expr": "proxmox_autoshutdown_cpu_usage_percent", "legendFormat": "CPU %"},
+          {"expr": "proxmox_autoshutdown_disk_usage_percent", "legendFormat": "Disk %"}
+        ],
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          }
+        },
+        "gridPos": {"h": 8, "w": 24, "x": 0, "y": 12}
+      }
+    ]
+  },
+  "overwrite": true
+}

@@ -1,0 +1,43 @@
+---
+- name: Install Proxmox Autoshutdown
+  hosts: proxmox_nodes
+  become: yes
+  vars:
+    proxmox_autoshutdown_version: "2.0.0"
+  tasks:
+    - name: Create directories
+      file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+      loop:
+        - /opt/proxmox-autoshutdown
+        - /var/lib/proxmox-autoshutdown
+        - /var/log/proxmox-autoshutdown
+        - /etc/proxmox-autoshutdown
+    - name: Install main script
+      copy:
+        src: ../src/proxmox-autoshutdown.sh
+        dest: /usr/local/sbin/proxmox-autoshutdown
+        mode: '0755'
+    - name: Install systemd service
+      copy:
+        src: ../systemd/proxmox-autoshutdown.service
+        dest: /etc/systemd/system/proxmox-autoshutdown.service
+      notify: reload systemd
+    - name: Install systemd timer
+      copy:
+        src: ../systemd/proxmox-autoshutdown.timer
+        dest: /etc/systemd/system/proxmox-autoshutdown.timer
+      notify: reload systemd
+    - name: Enable timer
+      systemd:
+        name: proxmox-autoshutdown.timer
+        enabled: yes
+        state: started
+  handlers:
+    - name: reload systemd
+      systemd:
+        daemon_reload: yes

@@ -1,0 +1,82 @@
+---
+# Proxmox Autoshutdown - Advanced Configuration
+# Supports: YAML, environment-specific configs, hot-reload
+
+environment: production
+
+# Logging
+log_level: INFO
+log_file: /var/log/proxmox-autoshutdown/proxmox-autoshutdown.log
+state_dir: /var/lib/proxmox-autoshutdown
+
+# Mode settings
+dry_run: false
+power_off_node: true
+
+# VM Configuration - Async with semaphore control
+vm:
+  shutdown_timeout: 60
+  global_wait: 600
+  parallel_shutdown: true
+  max_concurrent: 5
+  exclude_vmids: []
+
+# PBS Configuration - Async monitoring
+pbs:
+  enabled: true
+  safety_wait: 900
+  stable_checks: 10
+  check_interval: 5
+  # api_endpoint: "https://pbs:8007"
+  # api_token: "TOKEN"
+
+# APT Maintenance
+apt:
+  enabled: true
+  update: true
+  upgrade: true
+  autoremove: true
+  clean: true
+
+# Prometheus Metrics
+metrics:
+  enabled: true
+  port: 9100
+  host: "0.0.0.0"
+  path: "/metrics"
+
+# State Machine
+state_machine:
+  enabled: true
+  checkpoint_file: /var/lib/proxmox-autoshutdown/checkpoint.json
+  enable_rollback: true
+  max_retries: 3
+
+# Multi-channel Notifications
+notifications:
+  email:
+    enabled: true
+    to: ["admin@example.com"]
+    from_address: "proxmox@example.com"
+  slack:
+    enabled: false
+    webhook_url: ""
+  discord:
+    enabled: false
+    webhook_url: ""
+  pagerduty:
+    enabled: false
+    integration_key: ""
+    severity: "critical"
+
+# Environment-specific overrides
+environments:
+  development:
+    dry_run: true
+    power_off_node: false
+    notifications:
+      email:
+        to: ["dev@example.com"]
+  staging:
+    dry_run: false
+    power_off_node: false

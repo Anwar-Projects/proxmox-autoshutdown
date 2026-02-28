@@ -15,6 +15,16 @@ Graceful Proxmox VE node maintenance with email health reports.
 - **Completely Configurable**: Environment variables and config files
 - **Dry-Run Mode**: Test without making changes
 - **Error Recovery**: Error trap ensures report is sent even if script fails
+### Advanced Features (v2.0.0)
+
+- **[Async/Concurrency](ADVANCED_FEATURES.md)**: Parallel VM shutdown with semaphore control
+- **[State Machine](ADVANCED_FEATURES.md)**: Formal workflow engine with checkpoints
+- **[Prometheus Metrics](ADVANCED_FEATURES.md)**: Metrics endpoint on `:9100`
+- **[Multi-Channel Notifications](ADVANCED_FEATURES.md)**: Slack, Discord, PagerDuty support
+- **[YAML Configuration](ADVANCED_FEATURES.md)**: Advanced config with hot-reload
+- **[CI/CD u0026 Distribution](ADVANCED_FEATURES.md)**: GitHub Actions, Docker, Ansible
+
+See [ADVANCED_FEATURES.md](ADVANCED_FEATURES.md) for detailed documentation.
 
 ## Quick Start
 
