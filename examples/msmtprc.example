@@ -1,0 +1,44 @@
+# Example msmtprc configuration for proxmox-autoshutdown
+# 
+# msmtp is a lightweight SMTP relay that provides sendmail compatibility.
+# Install with: apt install msmtp-mta
+#
+# Save this file as /etc/msmtprc or ~/.msmtprc
+# Set permissions: chmod 600 /etc/msmtprc
+
+defaults
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        /var/log/msmtp.log
+
+# Gmail SMTP Example
+account        gmail
+host           smtp.gmail.com
+port           587
+from           youremail@gmail.com
+user           youremail@gmail.com
+passwordeval   "cat /root/.secrets/gmail_app_password"
+
+# Generic SMTP Example
+account        generic
+host           smtp.example.com
+port           587
+from           server@example.com
+user           server@example.com
+passwordeval   "cat /root/.secrets/smtp_password"
+
+# Set default account
+account default : gmail
+
+###############################################################################
+# Security Notes
+###############################################################################
+#
+# 1. NEVER commit this file with real passwords
+# 2. Use passwordeval to read from a secure file
+# 3. Set permissions: chmod 600 /etc/msmtprc
+# 4. Password files should be chmod 600 and owned by root
+#
+# For Gmail, use an App Password (not your main password):
+# https://support.google.com/accounts/answer/185833
