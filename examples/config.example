@@ -1,0 +1,64 @@
+# Configuration file for proxmox-autoshutdown
+# Copy this file to /etc/default/proxmox-autoshutdown and customize
+
+###############################################################################
+# Email Configuration (Required for email reports)
+###############################################################################
+
+# Email recipient - REQUIRED for email delivery
+# MAIL_TO="you@example.com"
+
+# Email sender (optional, defaults to proxmox@hostname)
+# MAIL_FROM="proxmox@example.com"
+
+# Email subject prefix (optional)
+# MAIL_SUBJECT_PREFIX="Proxmox Health + Shutdown Report"
+
+###############################################################################
+# Behavior Configuration
+###############################################################################
+
+# Set to 0 to disable node poweroff (for testing)
+# POWER_OFF_NODE=1
+
+# VM shutdown timeout in seconds (per-VM timeout for qm shutdown)
+# VM_SHUTDOWN_TIMEOUT=60
+
+# Global wait time for all VMs to stop (seconds)
+# VM_GLOBAL_WAIT=600
+
+# PBS task polling safety wait (seconds)
+# PBS_SAFETY_WAIT=900
+
+# Number of consecutive stable checks before considering PBS idle
+# PBS_STABLE_CHECKS=10
+
+# Interval between PBS checks (seconds)
+# PBS_INTERVAL=5
+
+###############################################################################
+# APT Maintenance (set to 0 to disable specific steps)
+###############################################################################
+
+# APT_UPDATE=1
+# APT_UPGRADE=1
+# APT_AUTOREMOVE=1
+# APT_CLEAN=1
+
+###############################################################################
+# Paths (usually don't need to change)
+###############################################################################
+
+# LOG_FILE="/var/log/proxmox_autoshutdown.log"
+# STATE_DIR="/var/lib/proxmox_autoshutdown"
+# HTML_REPORT="/tmp/proxmox_autoshutdown_report.html"
+
+###############################################################################
+# Debug/Testing
+###############################################################################
+
+# Set to 1 for dry-run mode (no actual shutdown or changes)
+# DRY_RUN=0
+
+# Log level: DEBUG, INFO, WARN, ERROR
+# LOG_LEVEL=INFO

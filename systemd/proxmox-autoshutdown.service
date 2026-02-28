@@ -1,0 +1,24 @@
+[Unit]
+Description=Proxmox Autoshutdown - VM Graceful Shutdown + Maintenance
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=-/etc/default/proxmox-autoshutdown
+ExecStart=/usr/local/sbin/proxmox-autoshutdown
+Nice=10
+IOSchedulingClass=best-effort
+IOSchedulingPriority=7
+
+# Root is required for VM operations and system maintenance
+User=root
+Group=root
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=proxmox-autoshutdown
+
+[Install]
+WantedBy=multi-user.target

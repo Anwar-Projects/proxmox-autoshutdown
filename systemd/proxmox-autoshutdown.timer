@@ -1,0 +1,12 @@
+[Unit]
+Description=Schedule Proxmox Autoshutdown
+Documentation=man:proxmox-autoshutdown(1)
+
+[Timer]
+# Run weekly on Sunday at 3 AM
+OnCalendar=Sun *-*-* 03:00:00
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target
